@@ -38,25 +38,31 @@ The application manages employee leave requests and exposes data using **OData V
 
 rap-employee-leave-management/
 │
-
+|
 ├── cds/
-
+|
 │   ├── zemp_leave_table.abap
+|
 │   ├── z_i_emp_leave.abap
+|
 │   ├── z_c_emp_leave.abap
+|
 │   └── z_c_emp_leave_ui.abap
 │
+|
 ├── behavior/
 │   ├── z_i_emp_leave.behavior
+|
 │   └── zbp_i_emp_leave.abap
+|
 │
 ├── service/
+|
 │   └── zui_emp_leave.srvd.abap
 │
 ├── data/
+|
 │   └── zcl_insert_emp_leave.abap
-│
-└── README.md
 
 
 ---

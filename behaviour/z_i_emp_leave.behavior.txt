@@ -1,0 +1,17 @@
+managed implementation in class zbp_i_emp_leave unique;
+strict;
+
+define behavior for Z_I_EMP_LEAVE
+persistent table zemp_leave
+lock master
+authorization master ( instance )
+{
+  create;
+  update;
+  delete;
+
+  determination set_defaults on modify { create; }
+
+  action approve result [1] $self;
+  action reject  result [1] $self;
+}

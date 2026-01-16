@@ -1,0 +1,85 @@
+CLASS lhc_Z_I_EMP_LEAVE DEFINITION INHERITING FROM cl_abap_behavior_handler.
+  PRIVATE SECTION.
+
+    METHODS get_instance_authorizations FOR INSTANCE AUTHORIZATION
+      IMPORTING keys REQUEST requested_authorizations FOR z_i_emp_leave RESULT result.
+
+    METHODS get_global_authorizations FOR GLOBAL AUTHORIZATION
+      IMPORTING REQUEST requested_authorizations FOR z_i_emp_leave RESULT result.
+
+    METHODS approve FOR MODIFY
+      IMPORTING keys FOR ACTION z_i_emp_leave~approve RESULT result.
+
+    METHODS reject FOR MODIFY
+      IMPORTING keys FOR ACTION z_i_emp_leave~reject RESULT result.
+
+    METHODS set_defaults FOR DETERMINE ON MODIFY
+      IMPORTING keys FOR z_i_emp_leave~set_defaults.
+
+ENDCLASS.
+
+CLASS lhc_Z_I_EMP_LEAVE IMPLEMENTATION.
+
+  METHOD get_instance_authorizations.
+  ENDMETHOD.
+
+  METHOD get_global_authorizations.
+  ENDMETHOD.
+
+  METHOD approve.
+        MODIFY ENTITIES OF z_i_emp_leave
+        IN LOCAL MODE
+        ENTITY Z_I_EMP_LEAVE
+        UPDATE FIELDS ( status )
+         WITH VALUE #(
+                FOR key in keys ( leave_id = key-leave_id status = 'APPROVED' )
+          ).
+
+         result = VALUE #( FOR key in keys ( %tky = key-%tky ) ).
+  ENDMETHOD.
+
+  METHOD reject.
+        MODIFY ENTITIES OF z_i_emp_leave
+        IN LOCAL MODE
+        ENTITY Z_I_EMP_LEAVE
+         UPDATE FIELDS ( status )
+         WITH VALUE #(
+          FOR key IN keys ( leave_id = key-leave_id status = 'REJECTED' )
+           ).
+
+           result = VALUE #( FOR key IN keys ( %tky = key-%tky ) ).
+  ENDMETHOD.
+
+  METHOD set_defaults.
+    READ ENTITIES OF z_i_emp_leave
+    IN LOCAL MODE
+    ENTITY Z_I_EMP_LEAVE
+    ALL FIELDS
+    WITH CORRESPONDING #( keys )
+    RESULT DATA(lt_leave).
+
+  LOOP AT lt_leave ASSIGNING FIELD-SYMBOL(<ls_leave>).
+
+    <ls_leave>-status     = 'NEW'.
+    <ls_leave>-created_on = cl_abap_context_info=>get_system_date( ).
+    <ls_leave>-created_by = cl_abap_context_info=>get_user_alias( ).
+
+    IF <ls_leave>-from_date IS NOT INITIAL
+       AND <ls_leave>-to_date IS NOT INITIAL.
+      <ls_leave>-no_of_days =
+        <ls_leave>-to_date - <ls_leave>-from_date + 1.
+    ELSE.
+      <ls_leave>-no_of_days = 1.
+    ENDIF.
+
+    ENDLOOP.
+
+     MODIFY ENTITIES OF z_i_emp_leave
+    IN LOCAL MODE
+    ENTITY Z_I_EMP_LEAVE
+    UPDATE FIELDS ( status created_on created_by no_of_days )
+    WITH CORRESPONDING #( lt_leave ).
+
+  ENDMETHOD.
+
+ENDCLASS.

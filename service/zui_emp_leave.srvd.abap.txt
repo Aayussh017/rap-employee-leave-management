@@ -1,0 +1,4 @@
+@EndUserText.label: 'Employee Leave Management Service'
+define service ZUI_EMP_LEAVE {
+  expose Z_C_EMP_LEAVE;
+}

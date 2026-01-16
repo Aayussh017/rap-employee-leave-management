@@ -1,0 +1,21 @@
+@EndUserText.label: 'Employee Leave – Consumption View'
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@Metadata.ignorePropagatedAnnotations: true
+@ObjectModel.usageType.serviceQuality: #X
+@ObjectModel.usageType.sizeCategory:#S
+@ObjectModel.usageType.dataClass: #TRANSACTIONAL
+@Metadata.allowExtensions: true
+
+define view entity Z_C_EMP_LEAVE
+  as select from Z_I_EMP_LEAVE
+{
+  key leave_id,
+      emp_id,
+      leave_type,
+      from_date,
+      to_date,
+      no_of_days,
+      status,
+      created_by,
+      created_on
+}

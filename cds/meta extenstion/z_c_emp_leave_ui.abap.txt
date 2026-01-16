@@ -1,0 +1,37 @@
+@Metadata.layer: #CORE
+annotate view Z_C_EMP_LEAVE with
+{
+  /* ---------- Identification (Object Page) ---------- */
+  @UI.identification: [{ position: 10 }]
+  @UI.lineItem: [{ position: 10 }]
+  emp_id;
+  
+  
+  @UI.identification: [{ position: 20 }]
+  @UI.lineItem: [{ position: 20 }]
+  leave_type;
+
+  @UI.identification: [{ position: 30 }]
+  @UI.lineItem: [{ position: 30 }]
+  from_date;
+
+  @UI.identification: [{ position: 40 }]
+  @UI.lineItem: [{ position: 40 }]
+  to_date;
+
+  /* ---------- Line Items (Table) ---------- */
+  @UI.lineItem: [{ position: 5 }]
+  leave_id;
+
+  @UI.lineItem: [{ position: 50 }]
+  no_of_days;
+
+  @UI.lineItem: [{ position: 60 }]
+  status;
+
+  @UI.lineItem: [{ position: 70 }]
+  created_by;
+
+  @UI.lineItem: [{ position: 80 }]
+  created_on;
+}

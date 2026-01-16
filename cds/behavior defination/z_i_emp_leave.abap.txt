@@ -1,0 +1,16 @@
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@EndUserText.label: 'Employee Leave – Interface View'
+@Metadata.ignorePropagatedAnnotations: true
+define root view entity Z_I_EMP_LEAVE as select from zemp_leave
+{
+    key leave_id,
+        emp_id,
+        leave_type,
+        from_date,
+        to_date,
+        no_of_days,
+        status,
+        created_by,
+        created_on
+       
+}

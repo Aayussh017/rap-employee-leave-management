@@ -1,0 +1,38 @@
+CLASS zcl_insert_emp_leave DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC.
+
+  PUBLIC SECTION.
+    INTERFACES if_oo_adt_classrun.
+ENDCLASS.
+
+CLASS zcl_insert_emp_leave IMPLEMENTATION.
+
+  METHOD if_oo_adt_classrun~main.
+
+    DATA ls_leave TYPE zemp_leave.
+
+    ls_leave-client      = sy-mandt.
+    ls_leave-leave_id    = 999.
+    ls_leave-emp_id      = 9998.
+    ls_leave-leave_type  = 'CL'.
+    ls_leave-from_date   = cl_abap_context_info=>get_system_date( ).
+    ls_leave-to_date     = cl_abap_context_info=>get_system_date( ) + 2.
+    ls_leave-no_of_days  = 3.
+    ls_leave-status      = 'NEW'.
+    ls_leave-created_by = cl_abap_context_info=>get_user_alias( ).
+    ls_leave-created_on = cl_abap_context_info=>get_system_date( ).
+
+    INSERT zemp_leave FROM @ls_leave.
+
+    IF sy-subrc = 0.
+      COMMIT WORK.
+      out->write( |Record inserted successfully| ).
+    ELSE.
+      out->write( |Insert failed| ).
+    ENDIF.
+
+  ENDMETHOD.
+
+ENDCLASS.

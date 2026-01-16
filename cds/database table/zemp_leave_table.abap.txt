@@ -1,0 +1,19 @@
+@EndUserText.label : 'employee table'
+@AbapCatalog.enhancement.category : #NOT_EXTENSIBLE
+@AbapCatalog.tableCategory : #TRANSPARENT
+@AbapCatalog.deliveryClass : #A
+@AbapCatalog.dataMaintenance : #RESTRICTED
+define table zemp_leave {
+
+  key client   : abap.clnt not null;
+  key leave_id : abap.numc(6) not null;
+  emp_id       : abap.numc(6);
+  leave_type   : abap.char(10);
+  from_date    : abap.dats;
+  to_date      : abap.dats;
+  no_of_days   : abap.int4;
+  status       : abap.char(10);
+  created_by   : abap.char(10);
+  created_on   : abap.dats;
+
+}
